@@ -8,6 +8,7 @@
     let canvas = null;
     let pasteButton = null;
     let output = null;
+    let loader = null;
 
     const API_URL = 'https://pasteface.up.railway.app';
 
@@ -17,6 +18,7 @@
         canvas = document.getElementById('canvas');
         pasteButton = document.getElementById('pasteButton');
         output = document.getElementById('output');
+        loader = document.getElementById('loader');
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: false })
             .then(stream => {
@@ -75,6 +77,9 @@
                 }
             }
 
+            output.style.display = 'none';
+            loader.style.display = 'block';
+            pasteButton.disabled = true;
             fetch(`${API_URL}/analyze`, {
                 method: 'POST',
                 mode: 'cors',
@@ -91,10 +96,13 @@
                 })
                 .catch(error => {
                     showError();
+                })
+                .finally(() => {
+                    loader.style.display = 'none';
+                    output.style.display = 'block';
+                    pasteButton.disabled = false;
                 });
 
-        } else {
-            clearphoto();
         }
     }
 
