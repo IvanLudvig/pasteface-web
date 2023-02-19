@@ -68,6 +68,7 @@
     border: 2px solid black;
     background-color: lightblue;
     cursor: pointer;
+    user-select: none;
 }
 
 #pasteButton:disabled {
