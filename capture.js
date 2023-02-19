@@ -77,6 +77,7 @@
 
             fetch(`${API_URL}/analyze`, {
                 method: 'POST',
+                mode: 'cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ image: data })
             })
