@@ -38,7 +38,7 @@
     gap: 120px;
 }
 
-#startbutton {
+#pasteButton {
     font-size: 36px;
     width: 108px;
     height: 108px;
@@ -46,6 +46,7 @@
     outline: none;
     border: 2px solid black;
     background-color: lightblue;
+    cursor: pointer;
 }
 
 #output {

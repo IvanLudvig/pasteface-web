@@ -6,7 +6,7 @@
 
     let video = null;
     let canvas = null;
-    let startbutton = null;
+    let pasteButton = null;
     let output = null;
 
     const API_URL = 'https://pasteface.up.railway.app';
@@ -15,7 +15,7 @@
         video = document.getElementById('video');
         width = video.getBoundingClientRect().width;
         canvas = document.getElementById('canvas');
-        startbutton = document.getElementById('startbutton');
+        pasteButton = document.getElementById('pasteButton');
         output = document.getElementById('output');
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -43,7 +43,7 @@
             }
         });
 
-        startbutton.addEventListener('click', e => {
+        pasteButton.addEventListener('click', e => {
             takepicture();
             e.preventDefault();
         });
@@ -51,7 +51,7 @@
         window.addEventListener('keypress', e => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                startbutton.click();
+                pasteButton.click();
             }
         });
     }
@@ -65,6 +65,16 @@
 
             let data = canvas.toDataURL();
 
+            const showError = () => {
+                if (output.textContent == '??') {
+                    output.textContent = '???';
+                } else if (output.textContent == '?') {
+                    output.textContent = '??';
+                } else {
+                    output.textContent = '?';
+                }
+            }
+
             fetch(`${API_URL}/analyze`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -72,10 +82,14 @@
             })
                 .then(value => value.json())
                 .then(data => {
-                    output.textContent = data.result || '?';
+                    if (data.result) {
+                        output.textContent = data.result;
+                    } else {
+                        showError();
+                    }
                 })
                 .catch(error => {
-                    output.textContent = '?';
+                    showError();
                 });
 
         } else {
