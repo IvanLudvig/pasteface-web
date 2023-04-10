@@ -103,3 +103,10 @@
         transform: rotate(360deg);
     }
 }
+
+.footer {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: 18px;
+}
